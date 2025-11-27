@@ -1,4 +1,4 @@
-#include "RotaryEncoder.h"
+#include "RotaryEncoder.hpp"
 
 RotaryEncoder::RotaryEncoder(int pinA, int pinB, int pinSW)
 : _pinA(pinA), _pinB(pinB), _pinSW(pinSW),
