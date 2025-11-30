@@ -13,6 +13,7 @@ public:
     bool configureSoftAP(const char* ssid, const char* password);
     void printAndSendToAllConnectedClients(const char* message);
     int getNumConnections();
+    void sendBinaryToAllConnectedClients(const uint8_t* data, size_t len);
 private:
     WiFiUDP Udp;
     unsigned int udpPort = 20025;

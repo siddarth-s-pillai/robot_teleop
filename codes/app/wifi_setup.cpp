@@ -40,3 +40,20 @@ void WiFiSetup::printAndSendToAllConnectedClients(const char* message) {
 int WiFiSetup::getNumConnections() {
     return WiFi.softAPgetStationNum();
 }
+
+
+void WiFiSetup::sendBinaryToAllConnectedClients(const uint8_t* data, size_t len) {
+    struct station_info *stat_info;
+    stat_info = wifi_softap_get_station_info();
+
+    while (stat_info != NULL) {
+        IPAddress ip = IPAddress((uint32_t)(stat_info->ip.addr));
+        
+        Udp.beginPacket(ip, udpPort);
+        Udp.write(data, len); // Send 'len' bytes from 'data'
+        Udp.endPacket();
+
+        stat_info = STAILQ_NEXT(stat_info, next);
+    }
+    wifi_softap_free_station_info();
+}
